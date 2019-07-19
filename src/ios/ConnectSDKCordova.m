@@ -21,7 +21,6 @@
 #import "ConnectSDKCordovaDispatcher.h"
 #import "ConnectSDKCordovaObjects.h"
 
-#import "ConnectSDK/AirPlayService.h"
 #import "ConnectSDK/CapabilityFilter.h"
 #import "ConnectSDK/DeviceServiceDelegate.h"
 
@@ -96,15 +95,6 @@
                 [_discoveryManager setPairingLevel:ConnectableDevicePairingLevelOff];
             } else if ([pairingLevel isEqualToString:@"on"]) {
                 [_discoveryManager setPairingLevel:ConnectableDevicePairingLevelOn];
-            }
-        }
-        
-        NSString* airPlayServiceMode = config[@"airPlayServiceMode"];
-        if (airPlayServiceMode) {
-            if ([airPlayServiceMode isEqualToString:@"webapp"]) {
-                [AirPlayService setAirPlayServiceMode:AirPlayServiceModeWebApp];
-            } else if ([airPlayServiceMode isEqualToString:@"media"]) {
-                [AirPlayService setAirPlayServiceMode:AirPlayServiceModeMedia];
             }
         }
         
@@ -463,7 +453,6 @@ static id orNull (id obj)
                 @"FIRST_SCREEN": @(DeviceServicePairingTypeFirstScreen),
                 @"PIN": @(DeviceServicePairingTypePinCode),
                 @"MIXED": @(DeviceServicePairingTypeMixed),
-                @"AIRPLAY_MIRRORING": @(DeviceServicePairingTypeAirPlayMirroring),
         };
     });
 
@@ -603,12 +592,6 @@ static id orNull (id obj)
             break;
         case DeviceServicePairingTypeMixed:
             pairingInfo = @{@"pairingType": @"mixed"};
-            break;
-        case DeviceServicePairingTypeAirPlayMirroring:
-            // TODO: provide a way to override automatically showing alert
-            [(UIAlertView *)pairingData show];
-            
-            pairingInfo = @{@"pairingType": @"airPlayMirroring"};
             break;
     }
     

@@ -36,9 +36,6 @@ typedef enum {
     /*! DeviceService can pair with multiple pairing types (ex. first screen OR pin) */
     DeviceServicePairingTypeMixed,
 
-    /*! DeviceService requires AirPlay mirroring to be enabled to connect */
-    DeviceServicePairingTypeAirPlayMirroring,
-
     /*! DeviceService pairing type is unknown */
     DeviceServicePairingTypeUnknown
 } DeviceServicePairingType;
