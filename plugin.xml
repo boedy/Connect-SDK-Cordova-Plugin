@@ -19,7 +19,7 @@
     </js-module>
 
     <platform name="ios">
-        <dependency id="cordova-plugin-add-swift-support" version="1.7.2"/>
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
         <js-module src="www/ios-capabilities.js" name="Capabilities.js">
             <merges target="navigator.__CSDKCapabilities" />
             <merges target="__CSDKCapabilities" />
