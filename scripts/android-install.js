@@ -15,7 +15,7 @@ var commands = {
 
 var paths = {
 	"ConnectSDK_Repository": "https://github.com/boedy/Connect-SDK-Android.git",
-	"ConnectSDK_Tag": "master",
+	"ConnectSDK_Tag": "android-10",
 };
 
 function safePath(unsafePath) {
@@ -32,7 +32,9 @@ AndroidInstall.prototype.steps = [
 
 AndroidInstall.prototype.start = function () {
 	console.log("Starting ConnectSDK Android install");
-	this.executeStep(0);
+	setTimeout(() => {
+		this.executeStep(0);
+	}, 1000)
 };
 
 AndroidInstall.prototype.executeStep = function (step) {
@@ -85,20 +87,17 @@ AndroidInstall.prototype.cloneConnectSDK = function () {
 		}
 	})
 	.then(function () {
-		return Q.nfcall(exec, "git clone --depth 1 " + paths.ConnectSDK_Repository + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory));
-	})
-	.then(function () {
-		return Q.nfcall(exec, "git checkout " + paths.ConnectSDK_Tag, {cwd: safePath("./cordova-plugin-connectsdk/" + csdkDirectory)});
+		return Q.nfcall(exec, "rm -rf "+safePath("./cordova-plugin-connectsdk/" + csdkDirectory)+";git clone --depth 1 -b " + paths.ConnectSDK_Tag + " " + paths.ConnectSDK_Repository + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory));
 	})
 	.then(function () {
 		return Q.nfcall(exec, "git submodule update --init", {cwd: safePath("./cordova-plugin-connectsdk/" + csdkDirectory)});
 	})
-	.then(function () {
-		return Q.nfcall(exec, commands.cp + " " + safePath("../../plugins/cordova-plugin-connectsdk/Connect-SDK-Android/build.gradle") + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/build-extras.gradle"));
-	})
-	.then(function () {
-		return Q.nfcall(exec, commands.cp + " " + safePath("./csdk_tmp/" + csdkDirectory + "/build.gradle") + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/build.gradle"));
-	});
+	// .then(function () {
+	// 	return Q.nfcall(exec, commands.cp + " " + safePath("../../plugins/cordova-plugin-connectsdk/Connect-SDK-Android/build.gradle") + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/build-extras.gradle"));
+	// })
+	// .then(function () {
+	// 	return Q.nfcall(exec, commands.cp + " " + safePath("./csdk_tmp/" + csdkDirectory + "/build.gradle") + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/build.gradle"));
+	// });
 };
 
 AndroidInstall.prototype.revert_cloneConnectSDK = function () {
@@ -123,3 +122,4 @@ AndroidInstall.prototype.revert_cleanup = function () {
 };
 
 new AndroidInstall().start();
+
