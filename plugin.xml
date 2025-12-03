@@ -52,9 +52,16 @@
         <framework src="AdSupport.framework" />
         <framework src="Connect-SDK-iOS/GoogleCast.framework" custom="true" type="projectReference" />
         <framework src="Connect-SDK-iOS/ConnectSDK.framework" custom="true" type="projectReference" />
-        <framework src="CocoaLumberjack" type="podspec" spec="~> 3.4.2" />
-        <framework src="CocoaAsyncSocket" type="podspec" spec="~> 7.6.3" />
-        <framework src="GCDWebServer" type="podspec" spec="~> 3.5.2" />
+        <podspec>
+            <config>
+                <source url="https://cdn.cocoapods.org/"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="CocoaLumberjack" spec="~> 3.4.2" />
+                <pod name="CocoaAsyncSocket" spec="~> 7.6.3" />
+                <pod name="GCDWebServer" spec="~> 3.5.2" />
+            </pods>
+        </podspec>
 
         <hook type="before_plugin_install" src="scripts/ios-symlink.js" />
         <hook type="after_plugin_install" src="scripts/ios-install.js" />
